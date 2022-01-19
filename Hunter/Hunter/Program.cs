@@ -1,4 +1,5 @@
 ﻿using System;
+using UdemyHDL.LearningCS.VII.BaseDeDatos;
 
 namespace UdemyHDL
 {
@@ -83,8 +84,20 @@ namespace UdemyHDL
             //// Tuplas
             //Tuplas output = new Tuplas();
 
-            // Excepciones
-            Excepciones output = new Excepciones();
+            //// Excepciones
+            //Excepciones output = new Excepciones();
+
+            //// Excepciones Personalizadas
+            //ExcepcionesPersonalizadas output = new ExcepcionesPersonalizadas();
+
+            //// LINQ
+            //LINQ output = new LINQ();
+
+            //// LINQ Join
+            //LINQ_Join output = new LINQ_Join();
+
+            // Conexion a una BD
+            BaseDeDatos output = new BaseDeDatos();
 
             output.OutPut();
 
