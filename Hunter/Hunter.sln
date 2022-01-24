@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdemyHDL", "Hunter\UdemyHDL.csproj", "{6D937E77-EA33-4A1A-8D2E-701ECD6747EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BD", "BD\BD.csproj", "{8EDB7288-EA78-40F8-94F6-FF69EE25C4A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BD", "BD\BD.csproj", "{8EDB7288-EA78-40F8-94F6-FF69EE25C4A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkSystem", "EntityFrameworkSystem\EntityFrameworkSystem.csproj", "{0DC3DB5E-01CF-4E8E-8183-A9FE426BD69F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{8EDB7288-EA78-40F8-94F6-FF69EE25C4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EDB7288-EA78-40F8-94F6-FF69EE25C4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EDB7288-EA78-40F8-94F6-FF69EE25C4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DC3DB5E-01CF-4E8E-8183-A9FE426BD69F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DC3DB5E-01CF-4E8E-8183-A9FE426BD69F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DC3DB5E-01CF-4E8E-8183-A9FE426BD69F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DC3DB5E-01CF-4E8E-8183-A9FE426BD69F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
