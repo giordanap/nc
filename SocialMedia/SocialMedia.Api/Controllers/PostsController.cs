@@ -10,7 +10,7 @@ namespace SocialMedia.Api.Controllers
     public class PostsController : ControllerBase
     {
         //LocalRedirectResult ideal es tener un metodo por cada verbo http
-        [HttpGet] 
+        [HttpGet]
         public IActionResult GetPosts()
         {
             //Es para indicarle al API que cuando llegue a este punto

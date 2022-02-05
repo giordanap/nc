@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SocialMedia.Infrastructure
+﻿namespace SocialMedia.Infrastructure
 {
     public class Class1
     {

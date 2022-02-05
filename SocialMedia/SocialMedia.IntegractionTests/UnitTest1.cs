@@ -1,5 +1,3 @@
-using Xunit;
-
 namespace SocialMedia.IntegractionTests
 {
     public class UnitTest1
