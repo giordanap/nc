@@ -4,10 +4,10 @@
 
 namespace SocialMedia.Api.Controllers
 {
+    //Este controlador se encargará de las publicaciones
     [Route("api/[controller]")]
     [ApiController]
-    //Este controlador se encargará de las publicaciones
-    public class PostsController : ControllerBase
+    public class PostController : ControllerBase
     {
         //LocalRedirectResult ideal es tener un metodo por cada verbo http
         [HttpGet]
@@ -17,7 +17,7 @@ namespace SocialMedia.Api.Controllers
             //devuelva diferentes estados dependiendo de la operacion
             //se validaron o procesaron correctamente. Un Ok devuelve
             //un status 200 (todo funciono como se esperaba)
-            return Ok(null);
+            return Ok(new { mensaje = "Todo OK" });
         }
     }
 }
