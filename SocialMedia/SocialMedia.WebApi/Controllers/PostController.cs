@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialMedia.Core.Interfaces;
 using SocialMedia.Infrastructure.Repositories;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,16 +12,31 @@ namespace SocialMedia.Api.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
+        //De en adelante se van a trabjar con las abstracciones y no
+        //con las implementaciones propias
         private readonly IPostRepository _postRepository;
 
-        public PostController(IPostRepository)
+        //Antes de crear el controlador (controlador del Post)
+        //alguien me tiene que decir cual es el repositorio
+        //que debo de usar, siendo este el principio basico de
+        //la inyeccion de dependencia, que es decidir, en algun
+        //punto de la aplicacion, las implementaciones concretas
+        //que se van a utilizar para las abstracciones que
+        //estamos referenciando, siendo en este caso una
+        //interfaz que es del repositorio. Entonces, para que
+        //este controlador funcione, debe existir un
+        //repositorio (tenemos 2 SQL y Mongo)
+        public PostController(IPostRepository postRepository)
         {
-
+            _postRepository = postRepository;
         }
 
         //LocalRedirectResult ideal es tener un metodo por cada verbo http
         [HttpGet]
-        public IActionResult GetPosts()
+        //Como ya se cambio la implementacion y se esta trabajando
+        //con metodos asincronos, la respuesta nos devuelve un
+        //available, que es un task
+        public async Task<IActionResult> GetPosts()
         {
             //Es para indicarle al API que cuando llegue a este punto
             //devuelva diferentes estados dependiendo de la operacion
@@ -63,7 +79,15 @@ namespace SocialMedia.Api.Controllers
             //usaremos es inyeccion via constructor, esto es:
             //En el momento que se va a instanciar una clase, se
             //le pasan los objetos que de este dependan
-            var posts = new PostRepository().GetPosts();
+
+
+            //var posts = new PostRepository().GetPosts();
+
+            //Ya con el constructor nos deshacemos del new, quitando
+            //el acoplamiento, y trabajamos con abastraciones
+
+            //Con el await ya esperamos a que el metodo se resuelva
+            var posts = await _postRepository.GetPosts();
             return Ok(posts);
         }
     }
