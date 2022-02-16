@@ -18,6 +18,6 @@ namespace SocialMedia.Core.Interfaces
 
         //Manejaremos metodos asincronos en donde se pueda
         //(e.g. task)
-        Task<IEnumerable<Publicacion>> GetPosts();
+        Task<IEnumerable<Post>> GetPosts();
     }
 }
