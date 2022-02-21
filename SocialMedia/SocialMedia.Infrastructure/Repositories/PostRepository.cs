@@ -37,5 +37,23 @@ namespace SocialMedia.Infrastructure.Repositories
 
             return post;
         }
+
+        //Creamos nuestro metodo en la base de datos,
+        //en este caso, en el repositorio. Haremos el
+        //insertado, pero sin hacer validaciones. Estas
+        //validaciones ya se verán más adelante.
+        public async Task InsertPost(Post post)
+        {
+            //Generamos contexto en la tabla de posts,
+            //vamos a agregar un nuevo post, que es
+            //este objeto que estamos recibiendo como
+            //parámetro
+            _context.Posts.Add(post);
+            //Luego, una ves lo agregamos, vamos a
+            //decirle que queremos guardar los cambios,
+            //y lo hacemos con context, save changes
+            //y lo hacemos asincronos
+            await _context.SaveChangesAsync();
+        }
     }
 }
