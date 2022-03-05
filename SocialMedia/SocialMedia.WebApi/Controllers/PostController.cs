@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using SocialMedia.Core.DTOs;
 using SocialMedia.Core.Entities;
 using SocialMedia.Core.Interfaces;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,6 +20,7 @@ namespace SocialMedia.Api.Controllers
         //De en adelante se van a trabjar con las abstracciones y no
         //con las implementaciones propias
         private readonly IPostRepository _postRepository;
+        private readonly IMapper _mapper;
 
         //Antes de crear el controlador (controlador del Post)
         //alguien me tiene que decir cual es el repositorio
@@ -26,9 +32,10 @@ namespace SocialMedia.Api.Controllers
         //interfaz que es del repositorio. Entonces, para que
         //este controlador funcione, debe existir un
         //repositorio (tenemos 2 SQL y Mongo)
-        public PostController(IPostRepository postRepository)
+        public PostController(IPostRepository postRepository, IMapper mapper)
         {
             _postRepository = postRepository;
+            _mapper = mapper;
         }
 
         //LocalRedirectResult ideal es tener un metodo por cada verbo http
@@ -88,13 +95,17 @@ namespace SocialMedia.Api.Controllers
 
             //Con el await ya esperamos a que el metodo se resuelva
             var posts = await _postRepository.GetPosts();
-            return Ok(posts);
+            var postsDto = _mapper.Map<IEnumerable<PostDto>>(posts);
+            
+            return Ok(postsDto);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPost(int id)
         {
             var post = await _postRepository.GetPost(id);
+            var postDto = _mapper.Map<PostDto>(post);
+
             return Ok(post);
         }
 
@@ -102,9 +113,13 @@ namespace SocialMedia.Api.Controllers
         //de un nuevo metodo. El nombre del metodo puede ser cualquiera
         //porque accederemos a él a través del verbo http y no
         //del metodo
+        //Los Post que envian los GET son post de las entidades de
+        //dominio, por eso trata de pintar el usuario y los comentarios
+        //en el postman cuando le pone null
         [HttpPost]
-        public async Task<IActionResult> Post(Post post)
+        public async Task<IActionResult> Post(PostDto postDto)
         {
+            var post = _mapper.Map<Post>(postDto);
             await _postRepository.InsertPost(post);
             return Ok(post);
         }
