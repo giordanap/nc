@@ -32,6 +32,13 @@ namespace SocialMedia.WebApi
             {
                 //Ignoramos la referencia circular
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            })
+            .ConfigureApiBehaviorOptions(options =>
+            {
+                //Configuramos las opciones de comportamiento de la API va a validar nuestro estado,
+                //y esta propiedad la suprimimos, esto si lo queremos validar de forma manual, o
+                //si no queremos validarlo
+                options.SuppressModelStateInvalidFilter = true;
             });
 
             services.AddDbContext<SocialMediaContext>(options =>
