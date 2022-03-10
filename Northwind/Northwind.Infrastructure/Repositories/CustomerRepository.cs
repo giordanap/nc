@@ -1,31 +1,39 @@
-﻿using Northwind.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Northwind.Core.Entities;
 using Northwind.Core.Interfaces;
+using Northwind.Infrastructure.Data;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Northwind.Infrastructure.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        public IEnumerable<Customer> GetCustomers()
+        private readonly NorthwindContext _context;
+
+        public CustomerRepository(NorthwindContext context)
         {
-            var customers = Enumerable.Range(1, 10).Select(x => new Customer
-            {
-                CustomerId = $"Id: {x}",
-                CompanyName = $"Nombre de la empresa: {x}",
-                ContactName = $"Nombre del contacto: {x}",
-                ContactTitle = $"Cargo del contacto: {x}",
-                Address = $"Direccion: {x}",
-                City = $"Ciudad: {x}",
-                Region = $"Region: {x}",
-                PostalCode = $"Codigo Postal: {x}",
-                Country = $"Pais: {x}",
-                Phone = $"Telefono: {x}",
-                Fax = $"Fax: {x}"
+            _context = context;
+        }
 
-            });
-
+        public async Task<IEnumerable<Customer>> GetCustomers()
+        {
+            var customers = await _context.Customers.ToListAsync();
             return customers;
+        }
+
+        public async Task<Customer> GetCustomer(string id)
+        {
+            var customer = await _context.Customers.FirstOrDefaultAsync(x => x.CustomerId == id);
+
+            return customer;
+        }
+
+        public async Task InsertCustomer(Customer customer)
+        {
+            _context.Customers.Add(customer);
+            await _context.SaveChangesAsync();
         }
     }
 }

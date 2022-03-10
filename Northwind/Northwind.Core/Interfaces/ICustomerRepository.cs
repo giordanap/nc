@@ -9,5 +9,7 @@ namespace Northwind.Core.Interfaces
     public interface ICustomerRepository
     {
         Task<IEnumerable<Customer>> GetCustomers();
+        Task<Customer> GetCustomer(string id);
+        Task InsertCustomer(Customer customer);
     }
 }

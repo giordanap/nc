@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Northwind.Core.Entities;
+using Northwind.Infrastructure.Data.Configurations;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -180,49 +181,7 @@ namespace Northwind.Infrastructure.Data
                     .IsFixedLength();
             });
 
-            modelBuilder.Entity<Customer>(entity =>
-            {
-                entity.HasKey(e => e.CustomerId);
-
-                entity.HasIndex(e => e.City)
-                    .HasName("City");
-
-                entity.HasIndex(e => e.CompanyName)
-                    .HasName("CompanyName");
-
-                entity.HasIndex(e => e.PostalCode)
-                    .HasName("PostalCode");
-
-                entity.HasIndex(e => e.Region)
-                    .HasName("Region");
-
-                entity.Property(e => e.CustomerId)
-                    .HasColumnName("CustomerID")
-                    .HasMaxLength(5)
-                    .IsFixedLength();
-
-                entity.Property(e => e.Address).HasMaxLength(60);
-
-                entity.Property(e => e.City).HasMaxLength(15);
-
-                entity.Property(e => e.CompanyName)
-                    .IsRequired()
-                    .HasMaxLength(40);
-
-                entity.Property(e => e.ContactName).HasMaxLength(30);
-
-                entity.Property(e => e.ContactTitle).HasMaxLength(30);
-
-                entity.Property(e => e.Country).HasMaxLength(15);
-
-                entity.Property(e => e.Fax).HasMaxLength(24);
-
-                entity.Property(e => e.Phone).HasMaxLength(24);
-
-                entity.Property(e => e.PostalCode).HasMaxLength(10);
-
-                entity.Property(e => e.Region).HasMaxLength(15);
-            });
+            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
 
             modelBuilder.Entity<EmployeeTerritorie>(entity =>
             {
