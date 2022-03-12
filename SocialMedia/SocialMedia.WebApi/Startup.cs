@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SocialMedia.Core.Interfaces;
 using SocialMedia.Infrastructure.Data;
+using SocialMedia.Infrastructure.Filters;
 using SocialMedia.Infrastructure.Repositories;
 using System;
 
@@ -38,7 +40,9 @@ namespace SocialMedia.WebApi
                 //Configuramos las opciones de comportamiento de la API va a validar nuestro estado,
                 //y esta propiedad la suprimimos, esto si lo queremos validar de forma manual, o
                 //si no queremos validarlo
-                options.SuppressModelStateInvalidFilter = true;
+                //Lo comentamos para no suprmir los errores, sino para que el ApiController sea el
+                //encargado de los errores
+                //options.SuppressModelStateInvalidFilter = true;
             });
 
             services.AddDbContext<SocialMediaContext>(options =>
@@ -51,6 +55,22 @@ namespace SocialMedia.WebApi
             //Apuntamos a las abstracciones y no a las
             //implementaciones
             services.AddTransient<IPostRepository, PostRepository>();
+
+            //Con esto le decimos a la aplicacion que haremos un filtro de manera global
+            //Ahora haremos las validaciones igual que con el automapper, lo hacemos en
+            //el metodo MVC. Aqui mencionamos que queremos hacer nuestras validaciones
+            //desde nuestros assemblies. Se puede hacer desde un unico assemblie, pero
+            //en nueastro caso lo hacemos de diferentes. En nuestro caso tenemos
+            //nuestras validaciones en una capa diferente al de nuestras Api ,pero si
+            //estuvieran en la misma capa, le especificariamos que lo saque de los que
+            //son clase Startup
+            services.AddMvc(options => {
+                options.Filters.Add<ValidationFilter>();
+            })
+            .AddFluentValidation(options =>
+            {
+                options.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

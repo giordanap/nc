@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace SocialMedia.Core.DTOs
 {
@@ -7,9 +6,10 @@ namespace SocialMedia.Core.DTOs
     { 
         public int PostId { get; set; }
         public int UserId { get; set; }
-        public DateTime Date { get; set; }
-        //Campo Descripcion obligatoria
-        [Required]
+        //Una fecha por defecto no es nulo, siempre le entrega un valor por
+        //defecto, por eso lo volvemos nulleable para recién poder
+        //restringirlo, a´si que le agregamos el signo de pregunta
+        public DateTime? Date { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
     }
