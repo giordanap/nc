@@ -55,5 +55,27 @@ namespace SocialMedia.Infrastructure.Repositories
             //y lo hacemos asincronos
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> UpdatePost(Post post)
+        {
+            var currentPost = await GetPost(post.PostId);
+
+            currentPost.Date = post.Date;
+            currentPost.Description = post.Description;
+            currentPost.Image = post.Image;
+
+            int rows = await _context.SaveChangesAsync();
+            return rows > 0;
+        }
+
+        public async Task<bool> DeletePost(int id)
+        {
+            var currentPost = await GetPost(id);
+            // Para eleiminar varios usamos Removerange
+            _context.Posts.Remove(currentPost);
+
+            int rows = await _context.SaveChangesAsync();
+            return rows > 0;
+        }
     }
 }
